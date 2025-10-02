@@ -23,3 +23,7 @@ Deliverables:
 - README.md
 - DEPLOYMENT.md (optional but useful)
 - Test plan/checklist
+
+Reference:
+- Point contributors to docs/tana-paste-docs.pdf and docs/demos/ in the README.
+- Verify output against the examples in docs/demos/ to ensure correctness.

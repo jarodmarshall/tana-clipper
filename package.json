@@ -1,0 +1,10 @@
+{
+  "name": "tana-clipper-extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chrome extension that captures web content as Tana Paste.",
+  "scripts": {
+    "build": "cp -R src dist && cp manifest.json dist/manifest.json && cp -R public dist/public",
+    "clean": "rm -rf dist"
+  }
+}

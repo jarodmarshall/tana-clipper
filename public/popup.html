@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tana Clipper</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 14px; margin: 0; min-width: 240px; color: #1f2933; }
+      h1 { font-size: 16px; margin: 0 0 12px; }
+      fieldset { border: 1px solid #d9e2ec; border-radius: 6px; padding: 10px 12px; margin: 0 0 12px; }
+      legend { font-weight: 600; font-size: 13px; padding: 0 6px; }
+      label { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 8px; }
+      .hint { font-size: 12px; color: #7b8794; margin: 0; }
+      .coming-soon { color: #cbd2d9; }
+    </style>
+  </head>
+  <body>
+    <h1>Tana Clipper</h1>
+    <fieldset>
+      <legend>Capture mode</legend>
+      <label>
+        <input type="radio" name="captureMode" value="selection" checked />
+        Select elements
+      </label>
+      <label class="coming-soon">
+        <input type="radio" name="captureMode" value="fullPage" disabled />
+        Full page (coming soon)
+      </label>
+      <label class="coming-soon">
+        <input type="radio" name="captureMode" value="bookmark" disabled />
+        Bookmark (coming soon)
+      </label>
+      <p class="hint">Use the context menu to clip your selection into Tana.</p>
+    </fieldset>
+    <script>
+      (function initPopup() {
+        const CAPTURE_KEY = 'tanaClipper.captureMode';
+        const radios = Array.from(document.querySelectorAll('input[name="captureMode"]'));
+        if (!radios.length || !chrome?.storage?.sync) return;
+
+        chrome.storage.sync.get(CAPTURE_KEY, (stored) => {
+          const requested = stored && stored[CAPTURE_KEY];
+          const match = radios.find((radio) => radio.value === requested);
+          if (match && !match.disabled) {
+            match.checked = true;
+          }
+        });
+
+        radios.forEach((radio) => {
+          radio.addEventListener('change', () => {
+            if (radio.disabled || !radio.checked) return;
+            chrome.storage.sync.set({ [CAPTURE_KEY]: radio.value });
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
